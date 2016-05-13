@@ -21,8 +21,25 @@ Recursos que te ayudaran a entenderlo:
 Todos los lenguajes actuales son obsoletos, aquí las razones:
 -Elixir es simplemente el primero lenguajes desde Ruby que se preocupa por la belleza del código, la experiencia de usuario, librerías y el ecosistema.
 -Elixir es uno de los lenguajes más practicos hasta la fecha. Recoge alguna de las mejores caracteristicas de Clojure: eficiencia, estrutura de datos inmutable, protocolos y registros. Al contrario de clojure cuenta con una verdadera optimizacion de [Tail call](https://en.wikipedia.org/wiki/Tail_call) y [Pipeline operator](http://elixir-lang.org/getting-started/enumerables-and-streams.html#the-pipe-operator). Tiene una agradable y moderna syntaxis similar a ruby, una rara gema entre los lenguajes funcionales.
--Elixir esta cerca de ser [Homoiconic](https://en.wikipedia.org/wiki/Homoiconicity). Elixir soporta macros que son ampliamente conocidos en LISP y Clojure pero son la tortura de los parentesis.
+-Elixir esta cerca de ser [Homoiconic](https://en.wikipedia.org/wiki/Homoiconicity). Elixir soporta macros que son ampliamente conocidos en LISP y Clojure pero son la tortura de los paréntesis.
 
 
 Ahora si empezamos:
 -------------
+Ahora que sabes que es elixir, empezaremos instalando el framework web de este lenguaje, que es Phoenix.
+Phoenix es un framework basado en el patrón MCV (modelo-vista-controlador) orientado a la alta productividad del desarrollador y a la alta performance de la aplicación. Es super rapido. Ademas que tienen funcionalidades como los "channels" para implementar comunicación bidireccional en tiempo real. 
+
+Para poder instalar Phoenix se necesita hex, y hex necesita de mix (mix ya fue instalado con elixir)
+Espera..
+Que es mix?
+Mix es una herramienta de construcción con elixir que provee tareas para crear, compilar, testear tu aplicación.
+Hex es el gestor de paquetes o librerias de tu proyecto. Una vez instalado hex, mix podrá manejar las librerías necesarias pero a travez de hex. 
+Este es el comando para instalar Hex:
+```
+mix local.hex
+```
+Ahora vamos a instalar el archivo Phoenix Mix. Un archivo Mix es un zip que contiene la estructura necesaria para generar una nueva aplicación base phoenix cada vez que queramos crear un nuevo proyecto.
+Este es el comando para instalar el archivo phoenix Mix:
+```
+mix local.hex
+```
