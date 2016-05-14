@@ -42,5 +42,19 @@ mix local.hex
 Ahora vamos a instalar el archivo Phoenix Mix. Un archivo Mix es un zip que contiene la estructura necesaria para generar una nueva aplicación base phoenix cada vez que queramos crear un nuevo proyecto.
 Este es el comando para instalar el archivo phoenix Mix:
 ```
-mix local.hex
+mix archive.install https://github.com/phoenixframework/archives/raw/master/phoenix_new.ez
 ```
+Ya tenemos la estructura de un proyecto con phoenix dentro de nuestra computadora. Ahora crearemos nuestro primer proyecto.
+Por una cuestion de orden todos nuestros proyectos o desarrollos los agruparemos en una carpeta 'dev'. Nos ubicamos en la carpeta 'dev' y lanzamos ahi la consola. (para usuarios windows, nos ubicamos dentro de la carpeta dev en el explorador y haciendo click derecho en el area donde se ve el contenido. Podremos ver que se despliega una lista donde estara 'git bash here'. Haciendole click podremos abrir una consola donde nuestra ubicacion sera la carpeta dev)
+Ahora para crear un proyecto phoenix ejecutamos el siguiente comando en la consola:
+```
+mix phoenix.new holi --no-brunch
+```
+phoenix.new indica a mix que ejecute una tarea donde creamos un proyecto phoenix. El 'Holi' sera el nombre de la carpeta que se creara, ademas que este nombre sera despues utilizado dentro de nuestro codigo.
+Cuando se ejecute el comando podremos ver que se nos avisara por consola que se creo una estructura basica y luego nos preguntara si queremos que se instalen las dependencias. Tecleamos Enter ó escribimos 'Y' y luego Enter para confirmar de manera explicita que queremos instalar dependencias.
+Ahora se nos mostrara que ya podemos lanzar nuestra aplicacion ejecutando el siguiente comando
+```
+cd holi
+mix phoenix.server
+```
+Entramos a nuestro navegador y accediendo al link 'localhost:4000' podremos ver que la aplicaciones Phoenix que acabomos de instalar esta funcionando.
