@@ -20,9 +20,9 @@ Recursos que te ayudaran:
 
 
 Todos los lenguajes actuales son obsoletos, aquí las razones:
--Elixir es simplemente el primero lenguajes desde Ruby que se preocupa por la belleza del código, la experiencia de usuario, librerías y el ecosistema.
--Elixir es uno de los lenguajes más practicos hasta la fecha. Recoge alguna de las mejores caracteristicas de Clojure: eficiencia, estrutura de datos inmutable, protocolos y registros. Al contrario de clojure cuenta con una verdadera optimizacion de [Tail call](https://en.wikipedia.org/wiki/Tail_call) y [Pipeline operator](http://elixir-lang.org/getting-started/enumerables-and-streams.html#the-pipe-operator). Tiene una agradable y moderna syntaxis similar a ruby, una rara gema entre los lenguajes funcionales.
--Elixir esta cerca de ser [Homoiconic](https://en.wikipedia.org/wiki/Homoiconicity). Elixir soporta macros que son ampliamente conocidos en LISP y Clojure pero son la tortura de los paréntesis.
+- Elixir es simplemente el primero lenguajes desde Ruby que se preocupa por la belleza del código, la experiencia de usuario, librerías y el ecosistema.
+- Elixir es uno de los lenguajes más practicos hasta la fecha. Recoge alguna de las mejores caracteristicas de Clojure: eficiencia, estrutura de datos inmutable, protocolos y registros. Al contrario de clojure cuenta con una verdadera optimizacion de [Tail call](https://en.wikipedia.org/wiki/Tail_call) y [Pipeline operator](http://elixir-lang.org/getting-started/enumerables-and-streams.html#the-pipe-operator). Tiene una agradable y moderna syntaxis similar a ruby, una rara gema entre los lenguajes funcionales.
+- Elixir esta cerca de ser [Homoiconic](https://en.wikipedia.org/wiki/Homoiconicity). Elixir soporta macros que son ampliamente conocidos en LISP y Clojure pero son la tortura de los paréntesis.
 
 
 Ahora si empezamos:
