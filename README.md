@@ -8,7 +8,6 @@ Prerequisitos
 * [Erlang Language](https://www.erlang-solutions.com/resources/download.html)
 * [Elixir Language](http://elixir-lang.org/install.html)
 * [PostgreSQL](http://www.postgresql.org/download/)
-* [Node](https://nodejs.org/en/)
 
 Empezamos!! .... Espera, why elixir?
 -------------
