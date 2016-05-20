@@ -5,6 +5,8 @@
 - [Prerequisitos](#prerequisitos)
 - [Elixir](#elixir)
 - [Instalacion Phoenix](#instalacion-phoenix)
+- [Iniciando nuestro primer proyecto](#iniciando-nuestro-primer-proyecto)
+
 
 # Prerequisitos
 -------------
@@ -51,6 +53,9 @@ mix archive.install https://github.com/phoenixframework/archives/raw/master/phoe
 ```
 Ya tenemos la estructura de un proyecto con phoenix dentro de nuestra computadora. Ahora crearemos nuestro primer proyecto.
 Por una cuestion de orden todos nuestros proyectos o desarrollos los agruparemos en una carpeta 'dev'. Nos ubicamos en la carpeta 'dev' y lanzamos ahi la consola. (para usuarios windows, nos ubicamos dentro de la carpeta dev en el explorador y haciendo click derecho en el area donde se ve el contenido. Podremos ver que se despliega una lista donde estara 'git bash here'. Haciendole click podremos abrir una consola donde nuestra ubicacion sera la carpeta dev)
+
+# Iniciando nuestro primer proyecto
+-------------
 Ahora para crear un proyecto phoenix ejecutamos el siguiente comando en la consola:
 ```
 mix phoenix.new holi --no-brunch
