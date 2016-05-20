@@ -7,4 +7,5 @@ Taller Makerlab de backend con Elixir y Phoenix.
 	- [Elixir](1era session.md#elixir)
 	- [Instalacion Phoenix](1era session.md#instalacion-phoenix)
 	- [Iniciando nuestro primer proyecto](#iniciando-nuestro-primer-proyecto)
+- [2da Session](2da session.md)
 
