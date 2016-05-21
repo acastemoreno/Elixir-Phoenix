@@ -12,8 +12,8 @@
 - [Creando base de datos](#creando-base-de-datos)
 - [Configurando aplicacion para conectar a base de datos](#configurando-aplicacion-para-conectar-a-base-de-datos)
 	- [Postgresql Only](#postgresql-only)
-
-
+	- [Mysql Only](#mysql-only)
+	- [Postgresql and Mysql](#postgresql-and-mysql)
 
 # Estructura del proyecto
 -------------
