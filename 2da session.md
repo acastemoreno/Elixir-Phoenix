@@ -3,14 +3,15 @@
 
 **Tabla de Contenido**
 - [Estructura del proyecto](#estructura-del-proyecto)
-		- [config](#config)
-		- [deps](#deps)
-		- [lib](#lib)
-		- [priv](#priv)
-		- [test](#test)
-		- [web](#web)
+	- [config](#config)
+	- [deps](#deps)
+	- [lib](#lib)
+	- [priv](#priv)
+	- [test](#test)
+	- [web](#web)
 - [Creando base de datos](#creando-base-de-datos)
 - [Configurando aplicacion para conectar a base de datos](#configurando-aplicacion-para-conectar-a-base-de-datos)
+	- [Postgresql Only](#postgresql-only)
 
 
 
@@ -27,15 +28,12 @@ Todo proyecto phoenix tiene la siguiente estructura basica:
 ├── web
 ```
 ##config
--------------
 Carpeta donde se detalla la configuracion por entornos (dev, prod y test).
 
 ##deps
--------------
 La carpeta deps contiene todas las librerias que necesitamos para nuestro proyecto.
 
 ##lib
--------------
 La carpeta lib contiene lo siguiente:
 ```
 ├── holi.ex
@@ -51,15 +49,12 @@ El endpoint.ex se encupa de todos los aspectos de solicitudes hasta que un route
 El repo.ex se encarga de hacer la conexion a la base de datos cuando se requiera.
 
 ##priv
--------------
 Carpeta donde se soporta mensajes multilanguage, migracion de base de datos y servir archivos estaticos (js,css,img)
 
 ##test
--------------
 Carpeta donde se hace testing de nuestra aplicacion.
 
 ##web
--------------
 Unica carpeta donde se produce hot code reload.
 La carpeta lib y web son las que utilizaremos para desarrollar nuestro proyectos. La finalidad de separa ambas carpetas es debido a que web contiene archivos relacionados con los estados relacionados con la duracion de un request web. En cambio lib esta asociado a los estados relacionados fuera de la dinamica web request.
 
