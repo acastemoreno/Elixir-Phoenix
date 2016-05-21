@@ -113,3 +113,21 @@ Requiere más pasos que solo teniendo una base de datos
 ```
 mix compile
 ```
+-Modificamos el archivo web/web.ex agregandole el repo de mysql:
+
+![mysql-webex](img/mysql-webex.png)
+
+#Conectando a la base de datos
+-------------
+
+Ejecutamos el siguiente comando para el esquema de una tabla en base de datos:
+```
+mix phoenix.gen.html Formulario formulario name:string email:string bio:string number_of_pets:integer
+```
+esto creara una serie de archivos con los cuales sera posible hacer un crud (create, read, update, delete).
+Pedira que añadas la siguiente linea a tu router.ex.
+```
+resources "/formulario", FormularioController
+```
+Este esta ubicado en la carpeta web.
+![form-model](img/form-model.png)
