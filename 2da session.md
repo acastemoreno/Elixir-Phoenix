@@ -14,6 +14,8 @@
 	- [Postgresql Only](#postgresql-only)
 	- [Mysql Only](#mysql-only)
 	- [Postgresql and Mysql](#postgresql-and-mysql)
+- [Conectando a la base de datos](#conectando-a-la-base-de-datos)
+	- [Caso solo una base de datos y formulario web](#caso-solo-una-base-de-datos-y-formulario-web)
 
 # Estructura del proyecto
 -------------
@@ -120,6 +122,7 @@ mix compile
 #Conectando a la base de datos
 -------------
 
+#Caso solo una base de datos y formulario web
 Ejecutamos el siguiente comando para el esquema de una tabla en base de datos:
 ```
 mix phoenix.gen.html Formulario formulario name:string email:string bio:string number_of_pets:integer
@@ -130,4 +133,19 @@ Pedira que añadas la siguiente linea a tu router.ex.
 resources "/formulario", FormularioController
 ```
 Este esta ubicado en la carpeta web.
+
 ![form-model](img/form-model.png)
+
+Vamos a crear y hacer un update de la estructura de la tablas con los suguientes comandos respectivamente:
+```
+mix ecto.create
+mix ecto.migrate
+```
+Este comando creara una base de datos en postgresql y creara tablas tal como hemos declarado en nuestro modelo.
+Ahora solo tenemos que servir el servidor y acceder al link  para poder ver como funciona. Algunos screen se muestran:
+
+![formulario1](img/formulario1.png)
+![formulario2](img/formulario2.png)
+![formulario3](img/formulario2.png)
+
+#Caso solo una base de datos y API
