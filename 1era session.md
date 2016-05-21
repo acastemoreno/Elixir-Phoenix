@@ -67,5 +67,6 @@ Ahora se nos mostrara que ya podemos lanzar nuestra aplicacion ejecutando el sig
 cd holi
 mix phoenix.server
 ```
-Entramos a nuestro navegador y accediendo al link 'localhost:4000' podremos ver que la aplicaciones Phoenix que acabomos de instalar esta funcionando. Si todo esta funcionando bien podremos ver lo siguiente:http://2.bp.blogspot.com/-NW4foVbfYQU/UFmk8F27O6I/AAAAAAAABGw/Bkof_J4ljgE/s1600/amiguitos.gif
+Entramos a nuestro navegador y accediendo al link 'localhost:4000' podremos ver que la aplicaciones Phoenix que acabomos de instalar esta funcionando.
+ Si todo esta funcionando bien podremos ver lo siguiente:
 ![Welcome png](img/welcome.png)
