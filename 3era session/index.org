@@ -17,7 +17,7 @@
 #+GITHUB: http://github.com/acastemoreno
 
 #+FAVICON: images/org-icon.png
-#+ICON: images/emacs-icon.png
+#+ICON: images/phoenix.png
 #+HASHTAG: #elixir #amiguitos #makerlab
 
 * List
