@@ -1,5 +1,5 @@
 slides > slide:not(.nobackground):before {
-background: url(../../images/org-icon.png) no-repeat 0 50%;
+background: url(../../images/phoenix.svg) no-repeat 0 50%;
 font-size: 12pt;
 content: "#elixir #amiguitos #makerlab";
 position: absolute;
