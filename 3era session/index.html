@@ -2,7 +2,7 @@
 <html>
 <head>
 <title></title>
-<!-- 2016-05-27 vie 20:00 -->
+<!-- 2016-05-28 sáb 03:50 -->
 <meta  charset="utf-8" />
 <meta  htto-equiv="X-UA-Compatible" content="chrome=1" />
 <meta  name="generator" content="Org-mode with org-ioslide" />
@@ -41,7 +41,7 @@
 <slide id="sec-" class=" segue dark quote nobackground" style="background-image: url(nil)">
 <aside class="gdbar right bottom"><img src="images/phoenix.svg"></aside><hgroup class="">
        <h2 class=" "><div id="outline-container-orgheadline4" class="outline-2">
-<h2 id="orgheadline4">Elixir Language</h2>
+<h2 id="orgheadline4">Pattern matching</h2>
 </div>
 </h2>
        <h3></h3>
@@ -61,7 +61,7 @@
        </hgroup>
 <article class="" id="text-">
 <p>
-En elixir el simbolo igual no es una asignación. En su lugar es una afirmacion. Tiene exito si Elixir puede encontrar una manera de hacer que el lado izquiero igual al lado derecho. Elixir llama al simbolo = operador match.
+En elixir el simbolo igual no es una asignación. En su lugar es una afirmacion. Tiene exito si Elixir puede encontrar una manera de hacer que el lado izquiero igual al lado derecho. Elixir llama al simbolo <code>=</code> operador match.
 </p>
 <div class="org-src-container">
 
@@ -123,7 +123,7 @@ iex&gt; a
        </hgroup>
 <article class="" id="text-">
 <p>
-Si queremos forzar a Elixir que use el actual valor de una variable en un Pattern matching agregamos el prefijo ^
+Si queremos forzar a Elixir que use el actual valor de una variable en un Pattern matching agregamos el prefijo <code>^</code>
 </p>
 <div class="org-src-container">
 
@@ -149,8 +149,8 @@ iex&gt; [ ^a, 2 ] = [ 1, 2 ]
 </slide>
 <slide id="sec-" class=" segue dark quote nobackground" style="background-image: url(nil)">
 <aside class="gdbar right bottom"><img src="images/phoenix.svg"></aside><hgroup class="">
-       <h2 class=" "><div id="outline-container-orgheadline5" class="outline-2">
-<h2 id="orgheadline5">Elixir Language</h2>
+       <h2 class=" "><div id="outline-container-orgheadline9" class="outline-2">
+<h2 id="orgheadline9">Fundamentos</h2>
 </div>
 </h2>
        <h3></h3>
@@ -159,8 +159,346 @@ iex&gt; [ ^a, 2 ] = [ 1, 2 ]
 
 
 </article>
+</slide>
+<slide id="sec-"  >
+<hgroup class="">
+       <h2 class=" "><div id="outline-container-orgheadline5" class="outline-3">
+<h3 id="orgheadline5">Truth</h3>
+</div>
+</h2>
+       <h3></h3>
+       </hgroup>
+<article class="" id="text-">
+<p>
+3 valores especiales en relacion operaciones booleanas: <code>true</code>, <code>false</code> and <code>nil</code>. <code>nil</code> es tratado como <code>false</code> en contextos booleanos.
+</p>
+
+<p>
+<b>Operaciones booleanas:</b>
+</p>
+
+<p>
+(Estos operadores esperan <code>true</code> o <code>false</code> como parametros)
+</p>
+<div class="org-src-container">
+
+<pre class="prettyprint" data-lang="elixir">
+a or b # true if a is true, otherwise b
+a and b # false if a is false, otherwise b
+not a # false if a is true, true otherwise
+</pre>
+
+</div>
+
+
+</article>
 
 </slide>
+</slide>
+<slide id="sec-"  >
+<hgroup class="">
+       <h2 class=" "><div id="outline-container-orgheadline6" class="outline-3">
+<h3 id="orgheadline6">Truthy</h3>
+</div>
+</h2>
+       <h3></h3>
+       </hgroup>
+<article class="" id="text-">
+<p>
+(Estos operadores esperan cualquier tipo de valor como parametros). Cualquier valor aparte de <code>nil</code> y <code>false</code> es interpretado como <code>true</code>.
+</p>
+<div class="org-src-container">
+
+<pre class="prettyprint" data-lang="elixir">
+a || b # a if a is truthy, otherwise b
+a &amp;&amp; b # b if a is truthy, otherwise a
+!a # false if a is truthy, otherwise true
+</pre>
+
+</div>
+
+
+</article>
+
+</slide>
+</slide>
+<slide id="sec-"  >
+<hgroup class="">
+       <h2 class=" "><div id="outline-container-orgheadline7" class="outline-3">
+<h3 id="orgheadline7">Alcance de las variables</h3>
+</div>
+</h2>
+       <h3></h3>
+       </hgroup>
+<article class="" id="text-">
+<p>
+Variables definidas en una funcion (incluido sus parametros) son locales a esa funcion.
+Otras estructuras definen su propio alcance pero eso veremos en otra ocasion.
+</p>
+
+<p>
+<b>La expresion with</b>
+</p>
+
+<p>
+La expresion <code>with</code> sirve para encapsular el alcance de ciertas variables dentro de la definicion de una variable.
+</p>
+
+
+</article>
+
+</slide>
+</slide>
+<slide id="sec-"  >
+<hgroup class="">
+       <h2 class=" "><div id="outline-container-orgheadline8" class="outline-3">
+<h3 id="orgheadline8"></h3>
+</div>
+</h2>
+       <h3></h3>
+       </hgroup>
+<article class="" id="text-">
+<p>
+Por ejemplo, el archivo /etc/passwd contiene las siguientes lineas:
+_installassistant:*:25:25:Install Assistant:/var/empty:/usr/bin/false
+_lp:*:26:26:Printing Services:/var/spool/cups:/usr/bin/false
+_postfix:*:27:27:Postfix Mail Server:/var/spool/postfix:/usr/bin/false
+</p>
+
+<p>
+Definimos una variable <code>contend</code> que segun el alcance tiene diferentes valores:
+</p>
+<div class="org-src-container">
+
+<pre class="prettyprint" data-lang="elixir">
+content = "Now is the time"
+lp =  with {:ok, file}  = File.open("/etc/passwd"),
+          content       = IO.read(file, :all),
+          :ok           = File.close(file),
+          [_, uid, gid] = Regex.run(~r/_lp:.*?:(\d+):(\d+)/, content)
+      do
+        "Group: #{gid}, User: #{uid}"
+      end
+IO.puts lp        #=&gt; Group: 26, User: 26
+IO.puts content   #=&gt; Now is the time
+</pre>
+
+</div>
+
+
+</article>
+
+</slide>
+
+</slide>
+</slide>
+<slide id="sec-" class=" segue dark quote nobackground" style="background-image: url(nil)">
+<aside class="gdbar right bottom"><img src="images/phoenix.svg"></aside><hgroup class="">
+       <h2 class=" "><div id="outline-container-orgheadline15" class="outline-2">
+<h2 id="orgheadline15">Funciones anonimas</h2>
+</div>
+</h2>
+       <h3></h3>
+       </hgroup>
+<article class="flexbox vleft auto-fadein" id="text-">
+
+
+</article>
+</slide>
+<slide id="sec-"  >
+<hgroup class="">
+       <h2 class=" "><div id="outline-container-orgheadline10" class="outline-3">
+<h3 id="orgheadline10"></h3>
+</div>
+</h2>
+       <h3></h3>
+       </hgroup>
+<article class="" id="text-">
+<p>
+Clasica funcion anomina que recibe 2 parametros
+</p>
+<div class="org-src-container">
+
+<pre class="prettyprint" data-lang="elixir">
+iex&gt; sum = fn (a, b) -&gt; a + b end
+#Function&lt;12.17052888 in :erl_eval.expr/5&gt;
+iex&gt; sum.(1, 2)
+3
+</pre>
+
+</div>
+
+<p>
+<b>Funciones y Pattern Matching</b>
+</p>
+
+<p>
+Funcion anonima que recibe un parametro pero que hace un Pattern Matching para enlazar variables.
+</p>
+<div class="org-src-container">
+
+<pre class="prettyprint" data-lang="elixir">
+iex&gt; swap = fn { a, b } -&gt; { b, a } end
+#Function&lt;12.17052888 in :erl_eval.expr/5&gt;
+iex&gt; swap.( { 6, 8 } )
+{8, 6}
+</pre>
+
+</div>
+
+
+</article>
+
+</slide>
+</slide>
+<slide id="sec-"  >
+<hgroup class="">
+       <h2 class=" "><div id="outline-container-orgheadline11" class="outline-3">
+<h3 id="orgheadline11">Una funcion, multiples cuerpos</h3>
+</div>
+</h2>
+       <h3></h3>
+       </hgroup>
+<article class="" id="text-">
+<p>
+Una funcion que hace multiples Pattern Matching:
+</p>
+<div class="org-src-container">
+
+<pre class="prettyprint" data-lang="elixir">
+iex&gt; handle_open = fn
+...&gt; {:ok, file} -&gt; "Read data: #{IO.read(file, :line)}"
+...&gt; {_, error}  -&gt; "Error: #{:file.format_error(error)}"
+...&gt; end
+#Function&lt;12.17052888 in :erl_eval.expr/5&gt;
+iex&gt; handle_open.(File.open("code/intro/hello.exs")) # this file exists
+"Read data: IO.puts \"Hello, World!\"\n"
+iex&gt; handle_open.(File.open("nonexistent"))          # this one doesn't
+"Error: no such file or directory"
+</pre>
+
+</div>
+
+
+</article>
+
+</slide>
+</slide>
+<slide id="sec-"  >
+<hgroup class="">
+       <h2 class=" "><div id="outline-container-orgheadline12" class="outline-3">
+<h3 id="orgheadline12">Funciones pueden retornan funciones</h3>
+</div>
+</h2>
+       <h3></h3>
+       </hgroup>
+<article class="" id="text-">
+<div class="org-src-container">
+
+<pre class="prettyprint" data-lang="elixir">
+iex&gt; fun1 = fn -&gt; (fn -&gt; "Hello" end) end
+#Function&lt;12.17052888 in :erl_eval.expr/5&gt;
+iex&gt; other = fun1.()
+#Function&lt;12.17052888 in :erl_eval.expr/5&gt;
+iex&gt; other.()
+"Hello"
+</pre>
+
+</div>
+
+<p>
+<b>Pasando funciones como parametros</b>
+</p>
+<div class="org-src-container">
+
+<pre class="prettyprint" data-lang="elixir">
+iex&gt; times_2 = fn n -&gt; n * 2 end
+#Function&lt;12.17052888 in :erl_eval.expr/5&gt;
+iex&gt; apply = fn (fun, value) -&gt; fun.(value) end
+#Function&lt;12.17052888 in :erl_eval.expr/5&gt;
+iex&gt; apply.(times_2, 6)
+12
+</pre>
+
+</div>
+
+
+</article>
+
+</slide>
+</slide>
+<slide id="sec-"  >
+<hgroup class="">
+       <h2 class=" "><div id="outline-container-orgheadline13" class="outline-3">
+<h3 id="orgheadline13">Uso de variables enlazadas por Pattern matching</h3>
+</div>
+</h2>
+       <h3></h3>
+       </hgroup>
+<article class="" id="text-">
+<div class="org-src-container">
+
+<pre class="prettyprint" data-lang="elixir">
+defmodule Greeter do
+  def for(name, greeting) do
+    fn
+      (^name)  -&gt; "#{greeting} #{name}"
+      (_)      -&gt; "I don't know you"
+    end
+  end
+end
+
+mr_valim = Greeter.for("José", "Oi!")
+
+IO.puts mr_valim.("José")
+IO.puts mr_valim.("dave")
+# =&gt; Oi! José
+# =&gt; I don't know you
+</pre>
+
+</div>
+
+
+</article>
+
+</slide>
+</slide>
+<slide id="sec-"  >
+<hgroup class="">
+       <h2 class=" "><div id="outline-container-orgheadline14" class="outline-3">
+<h3 id="orgheadline14">La notacion &amp;</h3>
+</div>
+</h2>
+       <h3></h3>
+       </hgroup>
+<article class="" id="text-">
+<p>
+Shortcut para crear pequeñas funciones anonimas:
+</p>
+<div class="org-src-container">
+
+<pre class="prettyprint" data-lang="elixir">
+iex&gt; add_one = &amp;(&amp;1 + 1)     # same as add_one = fn (n) -&gt; n + 1 end
+#Function&lt;6.17052888 in :erl_eval.expr/5&gt;
+iex&gt; add_one.(44)
+45
+iex&gt; divrem = &amp;{ div(&amp;1,&amp;2), rem(&amp;1,&amp;2) }
+#Function&lt;12.17052888 in :erl_eval.expr/5&gt;
+iex&gt; divrem.(13, 5)
+{2, 3}
+</pre>
+
+</div>
+
+
+</article>
+
+</slide>
+
+</slide>
+
+
+
 </slide>
 <slide id="sec-" class=" thank-you-slide segue nobackground" style="background-image: url(nil)">
 <aside class="gdbar right"><img src="images/phoenix.svg"></aside><article class="flexbox vleft auto-fadein" id="text-">

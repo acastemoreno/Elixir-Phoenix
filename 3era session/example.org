@@ -130,7 +130,7 @@ A source block looks like this:
           "^ *\\(&#x201[34];\\)\\(.+\\)\\(<br */>\\|\n\\)"
           "<span class='float-right'>\\1\\2</span>\\3" string))))</b>)
     (if (and slide-prop (string-match "segue" slide-prop))
-  (format "<q>\n%s</q>"
+  (format "<q>\n%s</q>"elixir basics
        <b>(funcall --make-sign contents)</b>)
       (format "<blockquote>\n%s</blockquote>"
         (save-match-data

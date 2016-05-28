@@ -2,7 +2,7 @@ var SLIDE_CONFIG = {
    // Slide Settings
    settings: {
      title: 'Elixir and Phoenix Framework', 
-     subtitle: '3era Session', 
+     subtitle: 'Elixir Language', 
      useBuilds: true, // Default: true. False will turn off slide animation builds. 
      usePrettify: true, // Default: true 
      enableSlideAreas: true, // Default: true. False turns off the click areas on either slide of the slides.

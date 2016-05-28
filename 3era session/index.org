@@ -1,5 +1,5 @@
 #+TITLE: Elixir and Phoenix Framework
-#+SUBTITLE: 3era Session
+#+SUBTITLE: Elixir Language
 #+DATE: 2016/05/29
 #+AUTHOR: Albert Castellano Moreno
 #+EMAIL: acastemoreno@gmail.com
@@ -22,14 +22,14 @@
 
 
 
-* Elixir Language
+* Pattern matching
   :PROPERTIES:
   :SLIDE:    segue dark quote
   :ASIDE:    right bottom
   :ARTICLE:  flexbox vleft auto-fadein
   :END:
 ** Pattern matching
-En elixir el simbolo igual no es una asignación. En su lugar es una afirmacion. Tiene exito si Elixir puede encontrar una manera de hacer que el lado izquiero igual al lado derecho. Elixir llama al simbolo = operador match.
+En elixir el simbolo igual no es una asignación. En su lugar es una afirmacion. Tiene exito si Elixir puede encontrar una manera de hacer que el lado izquiero igual al lado derecho. Elixir llama al simbolo === operador match.
 #+BEGIN_SRC elixir
 iex> list = [1, 2, 3]
 [1, 2, 3]
@@ -51,7 +51,7 @@ iex> a
 2
 #+END_SRC
 ** 
-Si queremos forzar a Elixir que use el actual valor de una variable en un Pattern matching agregamos el prefijo ^
+Si queremos forzar a Elixir que use el actual valor de una variable en un Pattern matching agregamos el prefijo =^=
 #+BEGIN_SRC elixir
 iex> a = 1
 1
@@ -62,12 +62,145 @@ iex> a = 2
 iex> [ ^a, 2 ] = [ 1, 2 ]
   ** (MatchError) no match of right hand side value: [1, 2]
 #+END_SRC
-* Elixir Language
+* Fundamentos
   :PROPERTIES:
   :SLIDE:    segue dark quote
   :ASIDE:    right bottom
   :ARTICLE:  flexbox vleft auto-fadein
   :END:
+** Truth
+3 valores especiales en relacion operaciones booleanas: =true=, =false= and =nil=. =nil= es tratado como =false= en contextos booleanos.
+
+*Operaciones booleanas:*
+
+(Estos operadores esperan =true= o =false= como parametros)
+#+BEGIN_SRC elixir
+a or b # true if a is true, otherwise b
+a and b # false if a is false, otherwise b
+not a # false if a is true, true otherwise
+#+END_SRC
+** Truthy
+(Estos operadores esperan cualquier tipo de valor como parametros). Cualquier valor aparte de =nil= y =false= es interpretado como =true=.
+#+BEGIN_SRC elixir
+a || b # a if a is truthy, otherwise b
+a && b # b if a is truthy, otherwise a
+!a # false if a is truthy, otherwise true
+#+END_SRC
+** Alcance de las variables
+Variables definidas en una funcion (incluido sus parametros) son locales a esa funcion.
+Otras estructuras definen su propio alcance pero eso veremos en otra ocasion.
+
+*La expresion with*
+
+La expresion =with= sirve para encapsular el alcance de ciertas variables dentro de la definicion de una variable.
+** 
+Por ejemplo, el archivo /etc/passwd contiene las siguientes lineas:
+_installassistant:*:25:25:Install Assistant:/var/empty:/usr/bin/false
+_lp:*:26:26:Printing Services:/var/spool/cups:/usr/bin/false
+_postfix:*:27:27:Postfix Mail Server:/var/spool/postfix:/usr/bin/false
+
+Definimos una variable =contend= que segun el alcance tiene diferentes valores:
+#+BEGIN_SRC elixir
+content = "Now is the time"
+lp =  with {:ok, file}  = File.open("/etc/passwd"),
+          content       = IO.read(file, :all),
+          :ok           = File.close(file),
+          [_, uid, gid] = Regex.run(~r/_lp:.*?:(\d+):(\d+)/, content)
+      do
+        "Group: #{gid}, User: #{uid}"
+      end
+IO.puts lp        #=> Group: 26, User: 26
+IO.puts content   #=> Now is the time
+#+END_SRC
+* Funciones anonimas
+  :PROPERTIES:
+  :SLIDE:    segue dark quote
+  :ASIDE:    right bottom
+  :ARTICLE:  flexbox vleft auto-fadein
+  :END:
+** 
+Clasica funcion anomina que recibe 2 parametros
+#+BEGIN_SRC elixir
+iex> sum = fn (a, b) -> a + b end
+#Function<12.17052888 in :erl_eval.expr/5>
+iex> sum.(1, 2)
+3
+#+END_SRC
+
+*Funciones y Pattern Matching*
+
+Funcion anonima que recibe un parametro pero que hace un Pattern Matching para enlazar variables.
+#+BEGIN_SRC elixir
+iex> swap = fn { a, b } -> { b, a } end
+#Function<12.17052888 in :erl_eval.expr/5>
+iex> swap.( { 6, 8 } )
+{8, 6}
+#+END_SRC
+** Una funcion, multiples cuerpos
+Una funcion que hace multiples Pattern Matching:
+#+BEGIN_SRC elixir
+iex> handle_open = fn
+...> {:ok, file} -> "Read data: #{IO.read(file, :line)}"
+...> {_, error}  -> "Error: #{:file.format_error(error)}"
+...> end
+#Function<12.17052888 in :erl_eval.expr/5>
+iex> handle_open.(File.open("code/intro/hello.exs")) # this file exists
+"Read data: IO.puts \"Hello, World!\"\n"
+iex> handle_open.(File.open("nonexistent"))          # this one doesn't
+"Error: no such file or directory"
+#+END_SRC
+** Funciones pueden retornan funciones
+#+BEGIN_SRC elixir
+iex> fun1 = fn -> (fn -> "Hello" end) end
+#Function<12.17052888 in :erl_eval.expr/5>
+iex> other = fun1.()
+#Function<12.17052888 in :erl_eval.expr/5>
+iex> other.()
+"Hello"
+#+END_SRC
+
+*Pasando funciones como parametros*
+#+BEGIN_SRC elixir
+iex> times_2 = fn n -> n * 2 end
+#Function<12.17052888 in :erl_eval.expr/5>
+iex> apply = fn (fun, value) -> fun.(value) end
+#Function<12.17052888 in :erl_eval.expr/5>
+iex> apply.(times_2, 6)
+12
+#+END_SRC
+** Uso de variables enlazadas por Pattern matching
+#+BEGIN_SRC elixir
+defmodule Greeter do
+  def for(name, greeting) do
+    fn
+      (^name)  -> "#{greeting} #{name}"
+      (_)      -> "I don't know you"
+    end
+  end
+end
+
+mr_valim = Greeter.for("José", "Oi!")
+
+IO.puts mr_valim.("José")
+IO.puts mr_valim.("dave")
+# => Oi! José
+# => I don't know you
+#+END_SRC
+** La notacion &
+Shortcut para crear pequeñas funciones anonimas:
+#+BEGIN_SRC elixir
+iex> add_one = &(&1 + 1)     # same as add_one = fn (n) -> n + 1 end
+#Function<6.17052888 in :erl_eval.expr/5>
+iex> add_one.(44)
+45
+iex> divrem = &{ div(&1,&2), rem(&1,&2) }
+#Function<12.17052888 in :erl_eval.expr/5>
+iex> divrem.(13, 5)
+{2, 3}
+#+END_SRC
+
+
+
 * Thank You ˊ・ω・ˋ
   :PROPERTIES:
   :SLIDE: thank-you-slide segue
