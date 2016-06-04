@@ -16,7 +16,7 @@
 
 #+GITHUB: http://github.com/acastemoreno
 
-#+FAVICON: images/phoenix.svg
+#+FAVICON: images/phoenix.png
 #+ICON: images/phoenix.svg
 #+HASHTAG: #elixir #amiguitos #makerlab
 
@@ -348,13 +348,76 @@ Puedes unir los terminos en una sola linea
 #+BEGIN_SRC elixir
 (1..10) |> Enum.map(&(&1*&1)) |> Enum.filter(&(&1 < 40))
 #+END_SRC
+** Modulos
+Proveen nombre a espacios para cosas que quieras definir. Pueden encapsular funciones, macros, structuras, protocoles y otros modulos.
+#+BEGIN_SRC elixir
+defmodule Mod do
+  def func1 do
+    IO.puts "in func1"
+  end
+  def func2 do
+    func1
+    IO.puts "in func2"
+  end
+end
+
+Mod.func1
+Mod.func2
+#+END_SRC
+** Encapsulando modulos
+#+BEGIN_SRC elixir
+defmodule Outer do
+  defmodule Inner do
+    def inner_func do
+    end
+  end
+  def outer_func do
+    Inner.inner_func
+  end
+end
+
+Outer.outer_func
+Outer.Inner.inner_func
+#+END_SRC
+** 
+No existe modulos dentro de otros. Lo que realmente pasa es que se modifica el nombre de los modulos. Esto es lo que significa:
+#+BEGIN_SRC elixir
+defmodule Mix.Tasks.Doctest do
+  def run do
+  end
+end
+
+Mix.Tasks.Doctest.run
+#+END_SRC
+** Modulos: Elixir, Erlang y atomos
+Internamente nombres de modulos son solo atomos:
+#+BEGIN_SRC elixir
+iex> IO.puts 123
+123
+iex> is_atom IO
+true
+iex> to_string IO
+"Elixir.IO"
+iex> :"Elixir.IO" === IO
+true
+iex> :"Elixir.IO".puts 123
+123
+#+END_SRC
+Esto para que me sirve???!!!
+** Llamando a funciones erlang
+En Erlang, la convencion para nombres es diferente: las variables empiezan con la primera letra en mayuscula y los atomos son simples nombres en minuscula.
+Modulos de Erlang estan en minuscula, significa que son atomos (igual a Elixir). Esto significa que para llamar a un modulo Erlang solo tenemos que llamar al atomo como funcion.
+**
+
+Ejemplo: vamos a llamar a la funcion =io.format= de erlang dentro de elixir
+#+BEGIN_SRC elixir
+iex> :io.format("The number is ~3.1f~n", [5.678])
+The number is 5.7
+:ok
+#+END_SRC
 * Thank You ˊ・ω・ˋ
   :PROPERTIES:
   :SLIDE: thank-you-slide segue
   :ASIDE: right
   :ARTICLE: flexbox vleft auto-fadein
   :END:
-
-* Footnotes
-
-[fn:1] Footnote is in here!

@@ -1,0 +1,138 @@
+#+TITLE: Elixir and Phoenix Framework
+#+SUBTITLE: Phoenix Language
+#+DATE: 2016/06/04
+#+AUTHOR: Albert Castellano Moreno
+#+EMAIL: acastemoreno@gmail.com
+#+OPTIONS: ':nil *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline
+#+OPTIONS: author:t c:nil creator:comment d:(not "LOGBOOK") date:t
+#+OPTIONS: e:t email:nil f:t inline:t num:nil p:nil pri:nil stat:t
+#+OPTIONS: tags:t tasks:t tex:t timestamp:t toc:nil todo:t |:t
+#+CREATOR: Emacs 24.4.1 (Org mode 8.2.10)
+#+DESCRIPTION:
+#+EXCLUDE_TAGS: noexport
+#+KEYWORDS:
+#+LANGUAGE: es
+#+SELECT_TAGS: export
+
+#+GITHUB: http://github.com/acastemoreno
+
+#+FAVICON: images/phoenix.png
+#+ICON: images/phoenix.svg
+#+HASHTAG: #phoenix #amiguitos #makerlab
+
+
+
+* Inspiración
+  :PROPERTIES:
+  :SLIDE:    segue dark quote
+  :ASIDE:    right bottom
+  :ARTICLE:  flexbox vleft auto-fadein
+  :END:
+** Lo mejor de todo el backend actual
+Todo por "Productividad |> Confiabilidad |> Rapidez"
+#+ATTR_HTML: :class build fade
+- Metaprogramacion: Lisp
+- [[https://en.wikipedia.org/wiki/Domain-specific_language][Domain-specific language]]: Ruby
+- Servicios: Clojure’s Ring
+- Rendimiento y fiabilidad de escalamiento: Erlang
+- API's amigables: Javascript frameworks
+** Posibles personas interesadas
+- Interezados en el paradigma de los lenguajes funcionales: [[https://youtu.be/8pTEmbeENF4?t=21m57s][The Future of Programming]]
+- Desarrolladores Rails: Response en ms y poder soporta millones de conexiones WebSockets de manera simultanea.
+- Programadores en lenguajes dinamicos (Ruby, Python y Javascript): Flexibidad sin comprometer performance y facilidad de mantenimiento.
+- Java!!!: Su creacion fue debido a las frustraciones con c++. Tarda mucho en ser dominado y esta tan fragmentado que hay librerias que "quizas" puedan ser usadas en produccion de manera segura.
+- Desarrollador Erlang: Desarrolladores que quieran hacer integraciones con desarrollo web.
+* Construyendo nuestra primera pagina
+  :PROPERTIES:
+  :SLIDE:    segue dark quote
+  :ASIDE:    right bottom
+  :ARTICLE:  flexbox vleft auto-fadein
+  :END:
+** Creamos un proyecto:
+#+BEGIN_SRC shell
+mix phoenix.new holi --no-brunch
+*creating hello/config/config.exs
+Fetch and install dependencies? [Yn] y
+*running mix deps.get
+#+END_SRC
+Creamos un usuario con privilegios para crear bases de datos y configuramos nuestro proyecto para acceder a la base de datos con este usuario(Revisar 2da session), luego creamos la base de datos y servimos por el puerto 4000 con los siguientes comandos: 
+#+BEGIN_SRC elixir
+$ cd hello
+$ mix ecto.create
+$ mix phoenix.server
+#+END_SRC
+** Paginas hello
+Crearemos una ruta "/hello", para eso nos ubicamos en el siguiente archivo:
+#+BEGIN_SRC elixir
+#holi/web/router.ex
+scope "/", Holi do
+  pipe_through :browser # Use the default browser stack
+
+  get "/", PageController, :index
+end
+#+END_SRC
+=scope= indica que este grupo de rutas intentaran hacer coincidir todas las rutas en su inicio con /. El =pipe_through :browser= significa que todos los request que tengan rutas matcheadas en ese =scope= pasara por una serie de transformaciones comunes a request de navegadores (plug :accepts, ["html"])
+** 
+Se puede observar una sola ruta que toma el request que se ve similiar a / y lo envia a la accion =:index= en el modulo =PageController=
+
+Agregamos una routa =hello= y tendriamos la siguiente estructura:
+#+BEGIN_SRC elixir
+<b>get "/hello", HelloController, :world</b>
+get "/", PageController, :index
+#+END_SRC
+El nuevo codigo hace que los request cuya ruta empieza con /hello sean enviadas a la funcion =:world= en el modulo =HelloController=
+** Ahora entramos al link http://localhost:4000/hello
+#+BEGIN_CENTER
+#+ATTR_HTML: :width 700px
+[[file:images/error_controller.png]]
+#+END_CENTER
+Obtenemos un error debido a que HelloController no existe.
+** Creamos el HelloController
+#+BEGIN_SRC elixir
+#holi/web/controller/hello_controller.ex
+defmodule Holi.HelloController do
+  use Holi.Web, :controller
+  
+  def world(conn, _params) do
+    render conn, "world.html"
+  end
+end
+#+END_SRC
+Este controllador es bastante simple.
+=user Hello.Web, :controller= nos da acceso al API Controlador de Phoenix.
+El enrutador ejecutara a la funcion =world= de nuestro controlador pasandole informacion que necesitaremos.
+** 
+Nuevamente entramos al link http://localhost:4000/hello y podemos observar que nos mostrara el siguiente error:
+#+BEGIN_SRC elixir
+undefined function Holi.HelloView.render/2 
+  (module Holi.HelloView is not available)
+#+END_SRC
+Tenemos que crear el modulo Holi.HelloView.
+
+Creamos el =HelloView= de la siguiente manera
+
+#+BEGIN_SRC elixir
+#holi/web/views/hello_view.ex
+defmodule Holi.HelloView do
+  use Holi.Web, :view
+end
+#+END_SRC
+** 
+Nuevamente entramos al link http://localhost:4000/hello observamos que existe un error:
+#+BEGIN_SRC elixir
+Could not render "world.html" for Holi.HelloView, 
+please define a matching clause for 
+render/2 or define a template at "web/templates/hello".
+#+END_SRC
+Ya casi!!, ya casi!! Solo tenemos que crear e archivo =hello.html.eex=
+#+BEGIN_SRC elixir
+#holi/web/templates/hello.html.eex
+<h1>Desde el template: Hello world!</h1>
+#+END_SRC
+Entramos al link http://localhost:4000/hello y podemos ver que el mensaje se cargo correctamente.
+* Thank You ˊ・ω・ˋ
+  :PROPERTIES:
+  :SLIDE: thank-you-slide segue
+  :ASIDE: right
+  :ARTICLE: flexbox vleft auto-fadein
+  :END:

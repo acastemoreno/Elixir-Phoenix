@@ -2,7 +2,7 @@
 <html>
 <head>
 <title></title>
-<!-- 2016-06-04 sáb 01:28 -->
+<!-- 2016-06-04 sáb 02:19 -->
 <meta  charset="utf-8" />
 <meta  htto-equiv="X-UA-Compatible" content="chrome=1" />
 <meta  name="generator" content="Org-mode with org-ioslide" />
@@ -526,8 +526,8 @@ iex&gt; Enum.map [1,2,3,4], &amp;(&amp;1 &lt; 3)
 </slide>
 <slide id="sec-" class=" segue dark quote nobackground" style="background-image: url(nil)">
 <aside class="gdbar right bottom"><img src="images/phoenix.svg"></aside><hgroup class="">
-       <h2 class=" "><div id="outline-container-orgheadline28" class="outline-2">
-<h2 id="orgheadline28">Modulos y funciones con nombre</h2>
+       <h2 class=" "><div id="outline-container-orgheadline33" class="outline-2">
+<h2 id="orgheadline33">Modulos y funciones con nombre</h2>
 </div>
 </h2>
        <h3></h3>
@@ -907,6 +907,175 @@ Puedes unir los terminos en una sola linea
 
 <pre class="prettyprint" data-lang="elixir">
 (1..10) |&gt; Enum.map(&amp;(&amp;1*&amp;1)) |&gt; Enum.filter(&amp;(&amp;1 &lt; 40))
+</pre>
+
+</div>
+
+
+</article>
+
+</slide>
+</slide>
+<slide id="sec-"  >
+<hgroup class="">
+       <h2 class=" "><div id="outline-container-orgheadline28" class="outline-3">
+<h3 id="orgheadline28">Modulos</h3>
+</div>
+</h2>
+       <h3></h3>
+       </hgroup>
+<article class="" id="text-">
+<p>
+Proveen nombre a espacios para cosas que quieras definir. Pueden encapsular funciones, macros, structuras, protocoles y otros modulos.
+</p>
+<div class="org-src-container">
+
+<pre class="prettyprint" data-lang="elixir">
+defmodule Mod do
+  def func1 do
+    IO.puts "in func1"
+  end
+  def func2 do
+    func1
+    IO.puts "in func2"
+  end
+end
+
+Mod.func1
+Mod.func2
+</pre>
+
+</div>
+
+
+</article>
+
+</slide>
+</slide>
+<slide id="sec-"  >
+<hgroup class="">
+       <h2 class=" "><div id="outline-container-orgheadline29" class="outline-3">
+<h3 id="orgheadline29">Encapsulando modulos</h3>
+</div>
+</h2>
+       <h3></h3>
+       </hgroup>
+<article class="" id="text-">
+<div class="org-src-container">
+
+<pre class="prettyprint" data-lang="elixir">
+defmodule Outer do
+  defmodule Inner do
+    def inner_func do
+    end
+  end
+  def outer_func do
+    Inner.inner_func
+  end
+end
+
+Outer.outer_func
+Outer.Inner.inner_func
+</pre>
+
+</div>
+
+
+</article>
+
+</slide>
+</slide>
+<slide id="sec-"  >
+<hgroup class="">
+       <h2 class=" "><div id="outline-container-orgheadline30" class="outline-3">
+<h3 id="orgheadline30"></h3>
+</div>
+</h2>
+       <h3></h3>
+       </hgroup>
+<article class="" id="text-">
+<p>
+No existe modulos dentro de otros. Lo que realmente pasa es que se modifica el nombre de los modulos. Esto es lo que significa:
+</p>
+<div class="org-src-container">
+
+<pre class="prettyprint" data-lang="elixir">
+defmodule Mix.Tasks.Doctest do
+  def run do
+  end
+end
+
+Mix.Tasks.Doctest.run
+</pre>
+
+</div>
+
+
+</article>
+
+</slide>
+</slide>
+<slide id="sec-"  >
+<hgroup class="">
+       <h2 class=" "><div id="outline-container-orgheadline31" class="outline-3">
+<h3 id="orgheadline31">Modulos: Elixir, Erlang y atomos</h3>
+</div>
+</h2>
+       <h3></h3>
+       </hgroup>
+<article class="" id="text-">
+<p>
+Internamente nombres de modulos son solo atomos:
+</p>
+<div class="org-src-container">
+
+<pre class="prettyprint" data-lang="elixir">
+iex&gt; IO.puts 123
+123
+iex&gt; is_atom IO
+true
+iex&gt; to_string IO
+"Elixir.IO"
+iex&gt; :"Elixir.IO" === IO
+true
+iex&gt; :"Elixir.IO".puts 123
+123
+</pre>
+
+</div>
+<p>
+Esto para que me sirve???!!!
+</p>
+
+
+</article>
+
+</slide>
+</slide>
+<slide id="sec-"  >
+<hgroup class="">
+       <h2 class=" "><div id="outline-container-orgheadline32" class="outline-3">
+<h3 id="orgheadline32">Llamando a funciones erlang</h3>
+</div>
+</h2>
+       <h3></h3>
+       </hgroup>
+<article class="" id="text-">
+<p>
+En Erlang, la convencion para nombres es diferente: las variables empiezan con la primera letra en mayuscula y los atomos son simples nombres en minuscula.
+Modulos de Erlang estan en minuscula, significa que son atomos (igual a Elixir). Esto significa que para llamar a un modulo Erlang solo tenemos que llamar al atomo como funcion.
+**
+</p>
+
+<p>
+Ejemplo: vamos a llamar a la funcion <code>io.format</code> de erlang dentro de elixir
+</p>
+<div class="org-src-container">
+
+<pre class="prettyprint" data-lang="elixir">
+iex&gt; :io.format("The number is ~3.1f~n", [5.678])
+The number is 5.7
+:ok
 </pre>
 
 </div>
