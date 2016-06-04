@@ -2,7 +2,7 @@
 <html>
 <head>
 <title></title>
-<!-- 2016-05-28 sáb 03:50 -->
+<!-- 2016-06-04 sáb 01:28 -->
 <meta  charset="utf-8" />
 <meta  htto-equiv="X-UA-Compatible" content="chrome=1" />
 <meta  name="generator" content="Org-mode with org-ioslide" />
@@ -294,8 +294,8 @@ IO.puts content   #=&gt; Now is the time
 </slide>
 <slide id="sec-" class=" segue dark quote nobackground" style="background-image: url(nil)">
 <aside class="gdbar right bottom"><img src="images/phoenix.svg"></aside><hgroup class="">
-       <h2 class=" "><div id="outline-container-orgheadline15" class="outline-2">
-<h2 id="orgheadline15">Funciones anonimas</h2>
+       <h2 class=" "><div id="outline-container-orgheadline16" class="outline-2">
+<h2 id="orgheadline16">Funciones anonimas</h2>
 </div>
 </h2>
        <h3></h3>
@@ -430,7 +430,7 @@ iex&gt; apply.(times_2, 6)
 <slide id="sec-"  >
 <hgroup class="">
        <h2 class=" "><div id="outline-container-orgheadline13" class="outline-3">
-<h3 id="orgheadline13">Uso de variables enlazadas por Pattern matching</h3>
+<h3 id="orgheadline13">Uso de variables enlazadas en dentro de Pattern matching</h3>
 </div>
 </h2>
        <h3></h3>
@@ -494,11 +494,429 @@ iex&gt; divrem.(13, 5)
 </article>
 
 </slide>
+</slide>
+<slide id="sec-"  >
+<hgroup class="">
+       <h2 class=" "><div id="outline-container-orgheadline15" class="outline-3">
+<h3 id="orgheadline15">&amp; Usado cuando otros funciones como paremetros</h3>
+</div>
+</h2>
+       <h3></h3>
+       </hgroup>
+<article class="" id="text-">
+<div class="org-src-container">
+
+<pre class="prettyprint" data-lang="elixir">
+iex&gt; Enum.map [1,2,3,4], &amp;(&amp;1 + 1)
+[2, 3, 4, 5]
+iex&gt; Enum.map [1,2,3,4], &amp;(&amp;1 * &amp;1)
+[1, 4, 9, 16]
+iex&gt; Enum.map [1,2,3,4], &amp;(&amp;1 &lt; 3)
+[true, true, false, false]
+</pre>
+
+</div>
+
+
+</article>
 
 </slide>
 
+</slide>
+</slide>
+<slide id="sec-" class=" segue dark quote nobackground" style="background-image: url(nil)">
+<aside class="gdbar right bottom"><img src="images/phoenix.svg"></aside><hgroup class="">
+       <h2 class=" "><div id="outline-container-orgheadline28" class="outline-2">
+<h2 id="orgheadline28">Modulos y funciones con nombre</h2>
+</div>
+</h2>
+       <h3></h3>
+       </hgroup>
+<article class="flexbox vleft auto-fadein" id="text-">
 
 
+</article>
+</slide>
+<slide id="sec-"  >
+<hgroup class="">
+       <h2 class=" "><div id="outline-container-orgheadline17" class="outline-3">
+<h3 id="orgheadline17"></h3>
+</div>
+</h2>
+       <h3></h3>
+       </hgroup>
+<article class="" id="text-">
+<p>
+Una vez que tu codigo crece, es una necesidad real estructuralo. Partes tu codigo en funciones con nombre y los organizas dentro de modulos.
+</p>
+<div class="org-src-container">
+
+<pre class="prettyprint" data-lang="elixir">
+#times.exs
+defmodule Times do
+  def double(n) do
+    n * 2
+  end
+end
+</pre>
+
+</div>
+
+
+</article>
+
+</slide>
+
+</slide>
+<slide id="sec-"  >
+<hgroup class="">
+       <h2 class=" "><div id="outline-container-orgheadline18" class="outline-3">
+<h3 id="orgheadline18">Compilando codigo</h3>
+</div>
+</h2>
+       <h3></h3>
+       </hgroup>
+<article class="" id="text-">
+<p>
+Puedes cargar un shell en consola y a la vez compilar el archivo.
+</p>
+<div class="org-src-container">
+
+<pre class="prettyprint" data-lang="elixir">
+$ iex times.exs
+iex&gt; Times.double 4
+8
+</pre>
+
+</div>
+<p>
+Abriendo una shell iex y despues compilar sin retornar a la linea de comando.
+</p>
+<div class="org-src-container">
+
+<pre class="prettyprint" data-lang="elixir">
+iex&gt; c "times.exs"
+[Times]
+iex&gt; Times.double(4)
+8
+iex&gt; Times.double(123)
+246
+</pre>
+
+</div>
+
+
+</article>
+
+</slide>
+</slide>
+<slide id="sec-"  >
+<hgroup class="">
+       <h2 class=" "><div id="outline-container-orgheadline19" class="outline-3">
+<h3 id="orgheadline19">do: como cuerpo de funcion</h3>
+</div>
+</h2>
+       <h3></h3>
+       </hgroup>
+<article class="" id="text-">
+<div class="org-src-container">
+
+<pre class="prettyprint" data-lang="elixir">
+def double(n), do: n * 2
+def greet(greeting, name), do: (
+  IO.puts greeting
+  IO.puts "How're you doing, #{name}?"
+)
+</pre>
+
+</div>
+
+
+</article>
+
+</slide>
+</slide>
+<slide id="sec-"  >
+<hgroup class="">
+       <h2 class=" "><div id="outline-container-orgheadline20" class="outline-3">
+<h3 id="orgheadline20">do y end</h3>
+</div>
+</h2>
+       <h3></h3>
+       </hgroup>
+<article class="" id="text-">
+<p>
+Para evitar el uso de parentesis cuando encapsulamos varias lineas de codigo para el <code>do:</code> usamos <code>do ... end</code>
+</p>
+<div class="org-src-container">
+
+<pre class="prettyprint" data-lang="elixir">
+#times1.exs
+defmodule Times do
+  def double(n), do: n * 2
+end
+</pre>
+
+</div>
+<p>
+Durante el periodo de compilacion los <code>do ... end</code> se convierten en <code>do:</code>
+</p>
+<div class="org-src-container">
+
+<pre class="prettyprint" data-lang="elixir">
+defmodule Times, do: (def double(n), do: n*2)
+</pre>
+
+</div>
+
+
+</article>
+
+</slide>
+</slide>
+<slide id="sec-"  >
+<hgroup class="">
+       <h2 class=" "><div id="outline-container-orgheadline21" class="outline-3">
+<h3 id="orgheadline21">Pattern Matching en funciones con nombre</h3>
+</div>
+</h2>
+       <h3></h3>
+       </hgroup>
+<article class="" id="text-">
+<div class="org-src-container">
+
+<pre class="prettyprint" data-lang="elixir">
+#factorial1.exs
+defmodule Factorial do
+  def of(0), do: 1
+  def of(n), do: n * of(n-1)
+end
+</pre>
+
+</div>
+<p>
+Hay 2 diferentes definiciones de una misma funcion. Si no matchea la primera difinicion buscara machear con la segunda. (Importa el orden de las definiciones.)
+</p>
+
+
+</article>
+
+</slide>
+</slide>
+<slide id="sec-"  >
+<hgroup class="">
+       <h2 class=" "><div id="outline-container-orgheadline22" class="outline-3">
+<h3 id="orgheadline22"></h3>
+</div>
+</h2>
+       <h3></h3>
+       </hgroup>
+<article class="" id="text-">
+<div class="org-src-container">
+
+<pre class="prettyprint" data-lang="elixir">
+#factorial1.exs
+iex&gt; c "factorial1.exs"
+[Factorial]
+iex&gt; Factorial.of(3)
+6
+iex&gt; Factorial.of(7)
+5040
+iex&gt; Factorial.of(10)
+3628800
+</pre>
+
+</div>
+<p>
+Lo anterior funciona matcheando "estructuras", y si queremos hacer un Pattern Matching que tambien distinga <code>types</code>
+</p>
+
+
+</article>
+
+</slide>
+</slide>
+<slide id="sec-"  >
+<hgroup class="">
+       <h2 class=" "><div id="outline-container-orgheadline23" class="outline-3">
+<h3 id="orgheadline23">Guard Clauses</h3>
+</div>
+</h2>
+       <h3></h3>
+       </hgroup>
+<article class="" id="text-">
+<p>
+<code>when</code> nos ayuda a verificar los <code>types</code> de las variables que hacen match.
+</p>
+<div class="org-src-container">
+
+<pre class="prettyprint" data-lang="elixir">
+#guard.exs
+defmodule Guard do
+  def what_is(x) when is_number(x) do
+    IO.puts "#{x} is a number"
+  end
+  def what_is(x) when is_list(x) do
+    IO.puts "#{inspect(x)} is a list"
+  end
+end
+</pre>
+
+</div>
+<p>
+LIMITACIONES: Solo estan permitidas estas <a href="http://elixir-lang.org/getting-started/case-cond-and-if.html#expressions-in-guard-clauses">Funciones</a> dentro de <code>when</code>.
+</p>
+
+
+</article>
+
+</slide>
+</slide>
+<slide id="sec-"  >
+<hgroup class="">
+       <h2 class=" "><div id="outline-container-orgheadline24" class="outline-3">
+<h3 id="orgheadline24">Parametros por defecto</h3>
+</div>
+</h2>
+       <h3></h3>
+       </hgroup>
+<article class="" id="text-">
+<div class="org-src-container">
+
+<pre class="prettyprint" data-lang="elixir">
+#default_params2.exs
+defmodule Params do
+  def func(p1, p2 \\ 123)
+  def func(p1, p2) when is_list(p1) do
+    "You said #{p2} with a list"
+  end
+  def func(p1, p2) do
+  "You passed in #{p1} and #{p2}"
+  end
+end
+
+IO.puts Params.func(99)
+IO.puts Params.func(99, "cat")
+IO.puts Params.func([99])
+IO.puts Params.func([99], "dog")
+</pre>
+
+</div>
+
+
+</article>
+
+</slide>
+</slide>
+<slide id="sec-"  >
+<hgroup class="">
+       <h2 class=" "><div id="outline-container-orgheadline25" class="outline-3">
+<h3 id="orgheadline25">Funciones privadas</h3>
+</div>
+</h2>
+       <h3></h3>
+       </hgroup>
+<article class="" id="text-">
+<p>
+<code>defp</code> es una madro para definir una funcion privata que solo puede ser llamada desde dentro del modulo que la declara.
+Puedes definir funciones privadas con Pattern Matching tal como en <code>def</code>. Pero no puedes definir funciones privadas y publicas con el mismo nombre. El siguiente codigo es invalido:
+</p>
+<div class="org-src-container">
+
+<pre class="prettyprint" data-lang="elixir">
+def fun(a) when is_list(a), do: true
+defp fun(a), do: false
+</pre>
+
+</div>
+
+
+</article>
+
+</slide>
+</slide>
+<slide id="sec-"  >
+<hgroup class="">
+       <h2 class=" "><div id="outline-container-orgheadline26" class="outline-3">
+<h3 id="orgheadline26">Pipe Operator: |&gt;</h3>
+</div>
+</h2>
+       <h3></h3>
+       </hgroup>
+<article class="" id="text-">
+<p>
+Puedes ver codigo como este:
+</p>
+<div class="org-src-container">
+
+<pre class="prettyprint" data-lang="elixir">
+people = DB.find_customers
+orders = Orders.for_customers(people)
+tax    = sales_tax(orders, 2016)
+filing = prepare_filing(tax)
+</pre>
+
+</div>
+<p>
+Creas demasiadas variables temporales asi que:
+</p>
+<div class="org-src-container">
+
+<pre class="prettyprint" data-lang="elixir">
+filing = prepare_filing(sales_tax(Orders.for_customers(DB.find_customers), 2013))
+</pre>
+
+</div>
+<p>
+:v funciona, pero dificil de leer y modificar.
+Elixir te da el operador <code>|&gt;</code> y funciona de la siguiente manera.
+</p>
+
+
+</article>
+
+</slide>
+</slide>
+<slide id="sec-"  >
+<hgroup class="">
+       <h2 class=" "><div id="outline-container-orgheadline27" class="outline-3">
+<h3 id="orgheadline27"></h3>
+</div>
+</h2>
+       <h3></h3>
+       </hgroup>
+<article class="" id="text-">
+<div class="org-src-container">
+
+<pre class="prettyprint" data-lang="elixir">
+filing = DB.find_customers
+        |&gt; Orders.for_customers
+        |&gt; sales_tax(2016)
+        |&gt; prepare_filing
+</pre>
+
+</div>
+<p>
+Para que se entienda: val |&gt; f(a,b) es basicamente lo mismo que f(val,a,b)
+</p>
+
+<p>
+Puedes unir los terminos en una sola linea
+</p>
+<div class="org-src-container">
+
+<pre class="prettyprint" data-lang="elixir">
+(1..10) |&gt; Enum.map(&amp;(&amp;1*&amp;1)) |&gt; Enum.filter(&amp;(&amp;1 &lt; 40))
+</pre>
+
+</div>
+
+
+</article>
+
+</slide>
+
+</slide>
 </slide>
 <slide id="sec-" class=" thank-you-slide segue nobackground" style="background-image: url(nil)">
 <aside class="gdbar right"><img src="images/phoenix.svg"></aside><article class="flexbox vleft auto-fadein" id="text-">

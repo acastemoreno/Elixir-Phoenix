@@ -168,7 +168,7 @@ iex> apply = fn (fun, value) -> fun.(value) end
 iex> apply.(times_2, 6)
 12
 #+END_SRC
-** Uso de variables enlazadas por Pattern matching
+** Uso de variables enlazadas en dentro de Pattern matching
 #+BEGIN_SRC elixir
 defmodule Greeter do
   def for(name, greeting) do
@@ -198,9 +198,156 @@ iex> divrem = &{ div(&1,&2), rem(&1,&2) }
 iex> divrem.(13, 5)
 {2, 3}
 #+END_SRC
+** & Usado cuando otros funciones como paremetros
+#+BEGIN_SRC elixir
+iex> Enum.map [1,2,3,4], &(&1 + 1)
+[2, 3, 4, 5]
+iex> Enum.map [1,2,3,4], &(&1 * &1)
+[1, 4, 9, 16]
+iex> Enum.map [1,2,3,4], &(&1 < 3)
+[true, true, false, false]
+#+END_SRC
+* Modulos y funciones con nombre
+  :PROPERTIES:
+  :SLIDE:    segue dark quote
+  :ASIDE:    right bottom
+  :ARTICLE:  flexbox vleft auto-fadein
+  :END:
+** 
+Una vez que tu codigo crece, es una necesidad real estructuralo. Partes tu codigo en funciones con nombre y los organizas dentro de modulos.
+#+BEGIN_SRC elixir
+#times.exs
+defmodule Times do
+  def double(n) do
+    n * 2
+  end
+end
+#+END_SRC
 
+** Compilando codigo
+Puedes cargar un shell en consola y a la vez compilar el archivo.
+#+BEGIN_SRC elixir
+$ iex times.exs
+iex> Times.double 4
+8
+#+END_SRC
+Abriendo una shell iex y despues compilar sin retornar a la linea de comando.
+#+BEGIN_SRC elixir
+iex> c "times.exs"
+[Times]
+iex> Times.double(4)
+8
+iex> Times.double(123)
+246
+#+END_SRC
+** do: como cuerpo de funcion
+#+BEGIN_SRC elixir
+def double(n), do: n * 2
+def greet(greeting, name), do: (
+  IO.puts greeting
+  IO.puts "How're you doing, #{name}?"
+)
+#+END_SRC
+** do y end
+Para evitar el uso de parentesis cuando encapsulamos varias lineas de codigo para el =do:= usamos =do ... end=
+#+BEGIN_SRC elixir
+#times1.exs
+defmodule Times do
+  def double(n), do: n * 2
+end
+#+END_SRC
+Durante el periodo de compilacion los =do ... end= se convierten en =do:=
+#+BEGIN_SRC elixir
+defmodule Times, do: (def double(n), do: n*2)
+#+END_SRC
+** Pattern Matching en funciones con nombre
+#+BEGIN_SRC elixir
+#factorial1.exs
+defmodule Factorial do
+  def of(0), do: 1
+  def of(n), do: n * of(n-1)
+end
+#+END_SRC
+Hay 2 diferentes definiciones de una misma funcion. Si no matchea la primera difinicion buscara machear con la segunda. (Importa el orden de las definiciones.)
+** 
+#+BEGIN_SRC elixir
+#factorial1.exs
+iex> c "factorial1.exs"
+[Factorial]
+iex> Factorial.of(3)
+6
+iex> Factorial.of(7)
+5040
+iex> Factorial.of(10)
+3628800
+#+END_SRC
+Lo anterior funciona matcheando "estructuras", y si queremos hacer un Pattern Matching que tambien distinga =types=
+** Guard Clauses
+=when= nos ayuda a verificar los =types= de las variables que hacen match.
+#+BEGIN_SRC elixir
+#guard.exs
+defmodule Guard do
+  def what_is(x) when is_number(x) do
+    IO.puts "#{x} is a number"
+  end
+  def what_is(x) when is_list(x) do
+    IO.puts "#{inspect(x)} is a list"
+  end
+end
+#+END_SRC
+LIMITACIONES: Solo estan permitidas estas [[http://elixir-lang.org/getting-started/case-cond-and-if.html#expressions-in-guard-clauses][Funciones]] dentro de =when=.
+** Parametros por defecto
+#+BEGIN_SRC elixir
+#default_params2.exs
+defmodule Params do
+  def func(p1, p2 \\ 123)
+  def func(p1, p2) when is_list(p1) do
+    "You said #{p2} with a list"
+  end
+  def func(p1, p2) do
+  "You passed in #{p1} and #{p2}"
+  end
+end
 
+IO.puts Params.func(99)
+IO.puts Params.func(99, "cat")
+IO.puts Params.func([99])
+IO.puts Params.func([99], "dog")
+#+END_SRC
+** Funciones privadas
+=defp= es una madro para definir una funcion privata que solo puede ser llamada desde dentro del modulo que la declara.
+Puedes definir funciones privadas con Pattern Matching tal como en =def=. Pero no puedes definir funciones privadas y publicas con el mismo nombre. El siguiente codigo es invalido:
+#+BEGIN_SRC elixir
+def fun(a) when is_list(a), do: true
+defp fun(a), do: false
+#+END_SRC
+** Pipe Operator: |>
+Puedes ver codigo como este:
+#+BEGIN_SRC elixir
+people = DB.find_customers
+orders = Orders.for_customers(people)
+tax    = sales_tax(orders, 2016)
+filing = prepare_filing(tax)
+#+END_SRC
+Creas demasiadas variables temporales asi que:
+#+BEGIN_SRC elixir
+filing = prepare_filing(sales_tax(Orders.for_customers(DB.find_customers), 2013))
+#+END_SRC
+:v funciona, pero dificil de leer y modificar.
+Elixir te da el operador =|>= y funciona de la siguiente manera.
+** 
+#+BEGIN_SRC elixir
+filing = DB.find_customers
+        |> Orders.for_customers
+        |> sales_tax(2016)
+        |> prepare_filing
+#+END_SRC
+Para que se entienda: val |> f(a,b) es basicamente lo mismo que f(val,a,b)
 
+Puedes unir los terminos en una sola linea
+#+BEGIN_SRC elixir
+(1..10) |> Enum.map(&(&1*&1)) |> Enum.filter(&(&1 < 40))
+#+END_SRC
 * Thank You ˊ・ω・ˋ
   :PROPERTIES:
   :SLIDE: thank-you-slide segue
