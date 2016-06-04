@@ -1,7 +1,7 @@
 var SLIDE_CONFIG = {
    // Slide Settings
    settings: {
-     title: 'Elixir and Phoenix Framework', 
+     title: 'Elixir and Phoenix Framework2', 
      subtitle: 'Phoenix Language', 
      useBuilds: true, // Default: true. False will turn off slide animation builds. 
      usePrettify: true, // Default: true 

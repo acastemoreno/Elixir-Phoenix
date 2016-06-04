@@ -2,7 +2,7 @@
 <html>
 <head>
 <title></title>
-<!-- 2016-06-04 sáb 06:24 -->
+<!-- 2016-06-04 sáb 14:28 -->
 <meta  charset="utf-8" />
 <meta  htto-equiv="X-UA-Compatible" content="chrome=1" />
 <meta  name="generator" content="Org-mode with org-ioslide" />
@@ -103,7 +103,7 @@ Todo por "Productividad |&gt; Confiabilidad |&gt; Rapidez"
 <slide id="sec-" class=" segue dark quote nobackground" style="background-image: url(nil)">
 <aside class="gdbar right bottom"><img src="images/phoenix.svg"></aside><hgroup class="">
        <h2 class=" "><div id="outline-container-orgheadline11" class="outline-2">
-<h2 id="orgheadline11">Construyendo una primera funcionalidad</h2>
+<h2 id="orgheadline11">Construyendo nuestra primera pagina</h2>
 </div>
 </h2>
        <h3></h3>
@@ -354,6 +354,89 @@ Ya casi!!, ya casi!! Solo tenemos que crear e archivo <code>hello.html.eex</code
 <p>
 Entramos al link <a href="http://localhost:4000/hello">http://localhost:4000/hello</a> y podemos ver que el mensaje se cargo correctamente.
 </p>
+
+
+</article>
+
+</slide>
+
+</slide>
+</slide>
+<slide id="sec-" class=" segue dark quote nobackground" style="background-image: url(nil)">
+<aside class="gdbar right bottom"><img src="images/phoenix.svg"></aside><hgroup class="">
+       <h2 class=" "><div id="outline-container-orgheadline14" class="outline-2">
+<h2 id="orgheadline14">Parametros en Rutas</h2>
+</div>
+</h2>
+       <h3></h3>
+       </hgroup>
+<article class="flexbox vleft auto-fadein" id="text-">
+
+
+</article>
+</slide>
+<slide id="sec-"  >
+<hgroup class="">
+       <h2 class=" "><div id="outline-container-orgheadline12" class="outline-3">
+<h3 id="orgheadline12"></h3>
+</div>
+</h2>
+       <h3></h3>
+       </hgroup>
+<article class="" id="text-">
+<p>
+Ahora no tenemos informacion dinamica en nuestras rutas. Para poder hacer dinamicas a estas rutas usaremos Pattern Matching.
+Reemplazaremos la ruta creada anteriormente en el archivo <code>web/router.ex</code> por lo siguiente:
+</p>
+<div class="org-src-container">
+
+<pre class="prettyprint" data-lang="elixir">
+get "/hello/:name", HelloController, :world
+</pre>
+
+</div>
+<p>
+Con <code>:name</code> declaramos que se creara un parametro llamado <code>:name</code> en nuestra ruta por Pattern Matching y sera enviado al controlador designado.
+</p>
+
+<p>
+Para esto modificaremos la funcion <code>world</code> que esta dentro de nuestro controlador de la siguiente manera:
+</p>
+<div class="org-src-container">
+
+<pre class="prettyprint" data-lang="elixir">
+def world(conn, %{"name" =&gt; name}) do
+  render conn, "world.html", name: name
+end
+</pre>
+
+</div>
+
+
+</article>
+
+</slide>
+</slide>
+<slide id="sec-"  >
+<hgroup class="">
+       <h2 class=" "><div id="outline-container-orgheadline13" class="outline-3">
+<h3 id="orgheadline13"></h3>
+</div>
+</h2>
+       <h3></h3>
+       </hgroup>
+<article class="" id="text-">
+<p>
+El controlador envia <code>name: name</code> al <code>View</code>. <code>name: name = en realidad es la siguiente tupla ={:name, name}</code>. La vista internamente asigna la variable <code>name</code> al atomo <code>:name</code>.
+Ahora nos toca usar el atomo <code>:name</code> dentro de nuestro template modificandolo de la manera siguiente:
+</p>
+<div class="org-src-container">
+
+<pre class="prettyprint" data-lang="elixir">
+&lt;h1&gt;Hello &lt;%= String.capitalize @name %&gt;!&lt;/h1&gt;
+</pre>
+
+</div>
 
 
 </article>
